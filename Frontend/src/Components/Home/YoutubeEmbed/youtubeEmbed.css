@@ -1,0 +1,17 @@
+.youtube-embed{
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 2rem;
+}
+@media screen and (max-width: 768px) {
+    .youtube-embed{
+        display:block;
+
+    }
+    iframe{
+       width:97%;
+        height: 250px;
+    }
+    
+}

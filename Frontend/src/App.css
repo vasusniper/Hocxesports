@@ -1,0 +1,72 @@
+/* global.css | Color Variables */
+
+:root {
+  /* Primary Backgrounds */
+  --color-primary-dark: #0f1923;
+  --color-secondary-dark: #1a2a3a;
+
+  /* Accent Colors */
+  --color-accent-gold: #ffc107;
+  --color-accent-red: #e94560;
+
+  /* Text Colors */
+  --color-text-light: #ffffff;
+  --color-text-secondary: #aaaaaa;
+
+  /* Neutral / Inactive */
+  --color-dark-gray: #444444;
+}
+html, body, #root {
+    height: 100%;
+  }
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #0f1923;
+  }
+  
+  .main-content {
+    flex: 1;
+  }
+
+/* Button Styles Globle */
+.Globle-button-style {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background-color: #ffc107;
+  color: #0f1923;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-top: 1.5rem;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  border: 2px solid transparent;
+}
+
+.Globle-button-style:hover {
+  background-color: transparent;
+  color: #ffc107;
+  border-color: #ffc107;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+/* Dividers hr line*/
+.divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffc107, transparent);
+  margin: 1rem auto 2rem;
+  width: 80%;
+  max-width: 400px;
+}
+/* Section headings*/
+.section-heading {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #ffc107;
+  margin-bottom: 2rem;
+  position: relative;
+}
