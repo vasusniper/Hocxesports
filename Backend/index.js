@@ -1,11 +1,11 @@
-const express=require("express");
-const cors=require("cors");
-const mongoose=require("mongoose");
-const session=require("express-session");
-const passport=require("passport");
-const authRoutes=require("./routes/auth");
-const teamRoutes=require('./routes/BgmiPlayer');
-const passportConfig=require("./config/passportConfig");
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const passport = require("passport");
+const authRoutes = require("./routes/auth");
+const teamRoutes = require('./routes/BgmiPlayer');
+const passportConfig = require("./config/passportConfig");
 require("dotenv").config();
 const app = express();
 // Connect MongoDB
@@ -40,6 +40,11 @@ app.use(passport.session());
 // Routes
 app.use("/auth", authRoutes);
 app.use('/teams', teamRoutes);
+
+// Test Route
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
 
 // Start Server
 const PORT = process.env.PORT || 5000;
