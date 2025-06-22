@@ -1,14 +1,15 @@
-const express = require("express");
-const router = express.Router();
-const multer = require("multer");
+const express=require("express");
+const router=express.Router();
+const multer=require("multer");
 const { cloudinary, storage } = require("../config/cloudinary"); // Make sure to import cloudinary
-const upload = multer({ storage });
-const Team = require("../models/playerTeam");
+const upload=multer({ storage });
+const Team=require("../models/playerTeam");
+const{teamValidate}=require("../middlewares/teamValidate.js")
 
 router.post(
   "/submit",
   upload.single("logo"),
-  async (req, res) => {
+ teamValidate,async (req, res) => {
     try {
       // Check if file was uploaded
       if (!req.file) {
