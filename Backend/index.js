@@ -41,11 +41,6 @@ app.use(passport.session());
 app.use("/auth", authRoutes);
 app.use('/teams', teamRoutes);
 
-// Test Route
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
-
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

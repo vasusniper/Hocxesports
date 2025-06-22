@@ -36,16 +36,32 @@ function Navbar() {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [hasShownSnackbar, setHasShownSnackbar] = useState(() => {
+    return sessionStorage.getItem("hasShownSnackbar") === "true";
+  });
+
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/auth/user", {
+        withCredentials: true,
+      });
+      setUser(res.data);
+    } catch {
+      setUser(null);
+      setHasShownSnackbar(false);
+      sessionStorage.removeItem("hasShownSnackbar");
+    }
+  };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/auth/user", { withCredentials: true })
-      .then((res) => setUser(res.data))
-      .catch(() => setUser(null));
+    fetchUser();
   }, []);
+
   useEffect(() => {
-    if (user) {
+    if (user && !hasShownSnackbar) {
       setShowSnackbar(true);
+      setHasShownSnackbar(true);
+      sessionStorage.setItem("hasShownSnackbar", "true");
     }
   }, [user]);
 
@@ -56,17 +72,31 @@ function Navbar() {
   const handleDrawerProfileClose = () => setDrawerAnchor(null);
 
   const handleLogout = async () => {
-    await axios.get("http://localhost:5000/auth/logout", {
-      withCredentials: true,
-    });
-    setUser(null);
-    setLogoutDialogOpen(false);
-    handleMenuClose();
-    handleDrawerProfileClose();
+    setLogoutDialogOpen(false); // Close the dialog immediately
+    try {
+      await axios.get("http://localhost:5000/auth/logout", {
+        withCredentials: true,
+      });
+
+      setHasShownSnackbar(false);
+      sessionStorage.removeItem("hasShownSnackbar");
+
+      await fetchUser(); // Refresh user state
+    } catch (error) {
+      console.error("Logout failed:", error);
+      setUser(null); // Fallback
+    }
   };
 
   const drawer = (
-    <Box sx={{ textAlign: "center", p: 2 }}>
+    <Box
+      sx={{
+        textAlign: "center",
+        p: 2,
+        backgroundColor: "var(--color-primary-dark)",
+        color: "white",
+      }}
+    >
       <Box sx={{ mb: 2 }}>
         {!user ? (
           <Button
@@ -76,6 +106,11 @@ function Navbar() {
               textTransform: "uppercase",
               fontWeight: "bold",
               fontSize: "0.9rem",
+              color: "white",
+              borderColor: "white",
+              "&:hover": {
+                borderColor: "white",
+              },
             }}
           >
             Login
@@ -95,10 +130,23 @@ function Navbar() {
               onClose={handleDrawerProfileClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               transformOrigin={{ vertical: "top", horizontal: "center" }}
+              PaperProps={{
+                sx: {
+                  backgroundColor: "var(--color-primary-dark)",
+                  color: "white",
+                },
+              }}
             >
-              <MenuItem disabled>{user.user.username}</MenuItem>
-              <MenuItem disabled>{user.user.email}</MenuItem>
-              <MenuItem onClick={() => setLogoutDialogOpen(true)}>
+              <MenuItem disabled sx={{ color: "white" }}>
+                {user.user.username}
+              </MenuItem>
+              <MenuItem disabled sx={{ color: "white" }}>
+                {user.user.email}
+              </MenuItem>
+              <MenuItem
+                onClick={() => setLogoutDialogOpen(true)}
+                sx={{ color: "white" }}
+              >
                 Logout
               </MenuItem>
             </Menu>
@@ -113,8 +161,22 @@ function Navbar() {
             component={Link}
             to={item.path}
             onClick={handleDrawerToggle}
+            sx={{
+              color: "white",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+              },
+            }}
           >
-            <ListItemText primary={item.text} />
+            <ListItemText
+              primary={item.text}
+              primaryTypographyProps={{
+                sx: {
+                  color: "white",
+                  fontWeight: "medium",
+                },
+              }}
+            />
           </ListItem>
         ))}
       </List>
@@ -123,23 +185,23 @@ function Navbar() {
 
   return (
     <>
-   <Snackbar
-  open={showSnackbar}
-  autoHideDuration={2000}
-  onClose={() => setShowSnackbar(false)}
-  message={`Welcome ${user?.user.username}  Login Successful`}
-  anchorOrigin={{ vertical: "top", horizontal: "center" }}
-   ContentProps={{
-    sx: {
-      mt: "10rem",          
-      textAlign: "center", 
-      fontSize: "0.875rem",
-      backgroundColor: "transparent",
-      color: "green",
-      fontWeight: 500,
-    },
-  }}
-/>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setShowSnackbar(false)}
+        message={`Welcome ${user?.user.username}! Login Successful`}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        ContentProps={{
+          sx: {
+            mt: "10rem",
+            textAlign: "center",
+            fontSize: "0.875rem",
+            backgroundColor: "transparent",
+            color: "green",
+            fontWeight: 700,
+          },
+        }}
+      />
 
       <AppBar
         component="nav"
@@ -208,10 +270,23 @@ function Navbar() {
                   anchorEl={menuAnchor}
                   open={Boolean(menuAnchor)}
                   onClose={handleMenuClose}
+                  PaperProps={{
+                    sx: {
+                      backgroundColor: "var(--color-primary-dark)",
+                      color: "white",
+                    },
+                  }}
                 >
-                  <MenuItem disabled>{user.user.username}</MenuItem>
-                  <MenuItem disabled>{user.user.email}</MenuItem>
-                  <MenuItem onClick={() => setLogoutDialogOpen(true)}>
+                  <MenuItem disabled sx={{ color: "white" }}>
+                    {user.user.username}
+                  </MenuItem>
+                  <MenuItem disabled sx={{ color: "white" }}>
+                    {user.user.email}
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => setLogoutDialogOpen(true)}
+                    sx={{ color: "white" }}
+                  >
                     Logout
                   </MenuItem>
                 </Menu>
@@ -257,22 +332,43 @@ function Navbar() {
         ModalProps={{ keepMounted: true }}
         sx={{
           display: { xs: "block", sm: "none" },
-          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 240 },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: 240,
+            backgroundColor: "var(--color-primary-dark)",
+            color: "white",
+          },
         }}
       >
         {drawer}
       </Drawer>
 
-      {/* Logout Confirmation Dialog */}
       <Dialog
         open={logoutDialogOpen}
         onClose={() => setLogoutDialogOpen(false)}
+        PaperProps={{
+          sx: {
+            backgroundColor: "var(--color-primary-dark)",
+            color: "white",
+          },
+        }}
       >
         <DialogTitle>Confirm Logout</DialogTitle>
         <DialogContent>Are you sure you want to log out?</DialogContent>
         <DialogActions>
-          <Button onClick={() => setLogoutDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleLogout} color="error" variant="contained">
+          <Button onClick={() => setLogoutDialogOpen(false)} sx={{ color: "white" }}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleLogout}
+            color="error"
+            variant="contained"
+            sx={{
+              "&:hover": {
+                backgroundColor: "darkred",
+              },
+            }}
+          >
             Logout
           </Button>
         </DialogActions>
