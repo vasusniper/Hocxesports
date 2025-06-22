@@ -4,7 +4,8 @@ const multer=require("multer");
 const { cloudinary, storage } = require("../config/cloudinary"); // Make sure to import cloudinary
 const upload=multer({ storage });
 const Team=require("../models/playerTeam");
-const {teamValidate}=require("../middlewares/teamValidate.js")
+const {teamValidate}=require("../middlewares/teamValidate.js");
+const User = require("../models/User.js");
 router.post(
   "/submit",
   upload.single("logo"),
@@ -76,7 +77,6 @@ router.get("/data", async (req, res) => {
     console.error("Error fetching teams:", err);
     res.status(500).json({ message: "Error fetching teams" });
   }
-  console.log(teams)
 });
 
 module.exports = router;

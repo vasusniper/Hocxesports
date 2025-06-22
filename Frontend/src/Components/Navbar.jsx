@@ -42,7 +42,7 @@ function Navbar() {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/auth/user", {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/auth/user`, {
         withCredentials: true,
       });
       setUser(res.data);
@@ -74,7 +74,7 @@ function Navbar() {
   const handleLogout = async () => {
     setLogoutDialogOpen(false); // Close the dialog immediately
     try {
-      await axios.get("http://localhost:5000/auth/logout", {
+      await axios.get(`${import.meta.env.VITE_API_BASE_URL}/auth/logout`, {
         withCredentials: true,
       });
 
@@ -100,7 +100,8 @@ function Navbar() {
       <Box sx={{ mb: 2 }}>
         {!user ? (
           <Button
-            href="http://localhost:5000/auth/google"
+            href={`${import.meta.env.VITE_API_BASE_URL}/auth/google`}
+            target="_self"
             variant="outlined"
             sx={{
               textTransform: "uppercase",
@@ -219,6 +220,8 @@ function Navbar() {
         >
           <Typography
             variant="h4"
+            component={Link}
+            to="/"
             sx={{
               fontWeight: "bold",
               letterSpacing: "4px",
@@ -226,6 +229,7 @@ function Navbar() {
               cursor: "pointer",
               textTransform: "uppercase",
               color: "#fff",
+              textDecoration: "none", // Optional: remove underline
             }}
           >
             HocxEsports
@@ -293,7 +297,7 @@ function Navbar() {
               </>
             ) : (
               <Button
-                href="http://localhost:5000/auth/google"
+                href={`${import.meta.env.VITE_API_BASE_URL}/auth/google`}
                 sx={{
                   color: "#fff",
                   fontSize: { xs: "0.9rem", sm: "1.1rem", md: "1.3rem" },
@@ -356,7 +360,10 @@ function Navbar() {
         <DialogTitle>Confirm Logout</DialogTitle>
         <DialogContent>Are you sure you want to log out?</DialogContent>
         <DialogActions>
-          <Button onClick={() => setLogoutDialogOpen(false)} sx={{ color: "white" }}>
+          <Button
+            onClick={() => setLogoutDialogOpen(false)}
+            sx={{ color: "white" }}
+          >
             Cancel
           </Button>
           <Button

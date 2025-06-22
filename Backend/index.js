@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const authRoutes = require("./routes/auth");
 const teamRoutes = require('./routes/BgmiPlayer');
@@ -9,8 +10,9 @@ const passportConfig = require("./config/passportConfig");
 require("dotenv").config();
 const app = express();
 // Connect MongoDB
+const DB_URL=process.env.DB_URL;
 mongoose
-  .connect("mongodb://127.0.0.1:27017/Hocxesports", {
+  .connect(DB_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -21,16 +23,27 @@ passportConfig(passport);
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin:process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
   })
 );
 app.use(express.json());
+// Express session
 app.use(
   session({
-    secret: "secretkey",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl:DB_URL,
+      collectionName: 'sessions',
+      touchAfter:24*3600,
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    },
   })
 );
 

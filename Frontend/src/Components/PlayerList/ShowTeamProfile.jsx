@@ -1,16 +1,21 @@
-import TeamAddForm from './TeamAddForm';
+import TeamAddForm from "./TeamAddForm";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ShowTeamProfile.css";
 
-const ShowTeamProfile= () => {
+const ShowTeamProfile = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const fetchTeams = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/teams/data");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/teams/data`,
+        {
+          withCredentials: true,
+        }
+      );
       setTeams(response.data);
     } catch (err) {
       setError("Failed to fetch teams. Please try again later.");
@@ -41,7 +46,7 @@ const ShowTeamProfile= () => {
     <div className="team-list-container">
       <TeamAddForm onTeamCreated={fetchTeams} />
 
-      <h2 style={{color:"#ffc107"}}>Registered Teams</h2>
+      <h2 style={{ color: "#ffc107" }}>Registered Teams</h2>
       <div className="divider"></div>
 
       {teams.length === 0 ? (
