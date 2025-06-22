@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import TeamSection from "../miscellaneous/teamSection";
-import "./AboutPage.css";
+import "./aboutPage.css";
 
 function AboutPage() {
   return (
