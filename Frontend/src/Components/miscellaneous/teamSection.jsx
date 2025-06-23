@@ -13,7 +13,6 @@ const TeamSection = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const sliderRef = useRef(null);
-
   const teamMembers = [
     {
       img: Sachin,

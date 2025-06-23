@@ -9,7 +9,6 @@ const Slider = () => {
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
       </div>
-
       <div className="carousel-inner">
         <div className="carousel-item active">
           <img src="/images/BGMI_1.jpeg" className="d-block w-100 slider-img" alt="First Slide" />
