@@ -1,7 +1,7 @@
-import TeamAddForm from "./TeamAddForm";
+import TeamAddForm from "./teamAddForm";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./ShowTeamProfile.css";
+import "./showTeamProfile.css";
 
 const ShowTeamProfile = () => {
   const [teams, setTeams] = useState([]);

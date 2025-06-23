@@ -5,7 +5,7 @@ import "./homePage.css";
 import HeroSection from "./HeroSection/heroSection";
 import YouTubeEmbed from "./YoutubeEmbed/youtubeEmbed";
 import Tournament from "../Tournament/tournamentList";
-import TeamSection from "../miscellaneous/teamSection";
+import TeamSection from "../Miscellaneous/teamSection";
 
 export default function HomePage() {
   return (

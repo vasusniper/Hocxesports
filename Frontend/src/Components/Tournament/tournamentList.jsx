@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Snackbar, Alert } from "@mui/material";
-import "./TournamentList.css";
+import "./tournamentList.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const tournaments = [

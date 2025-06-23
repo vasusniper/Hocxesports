@@ -1,7 +1,7 @@
 import React from "react";
 import TournamentList from "./tournamentList";
 import "./tournamentPage.css"
-import ShowTeamProfile from "../PlayerList/ShowTeamProfile";
+import ShowTeamProfile from "../PlayerList/showTeamProfile";
 
 const tournamentPage = () => {
   return (
