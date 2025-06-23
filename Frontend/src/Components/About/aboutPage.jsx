@@ -1,7 +1,7 @@
 // AboutPage.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-import TeamSection from "../Miscellaneous/teamSection";
+import TeamSection from "../miscellaneous/teamSection";
 import "./aboutPage.css";
 
 function AboutPage() {
