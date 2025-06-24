@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node":"22.16.0"
+    "node": "20.19.3"
   },
   "name": "backend",
   "version": "1.0.0",
@@ -23,6 +23,7 @@
     "express": "^5.1.0",
     "express-session": "^1.18.1",
     "joi": "^17.13.3",
+    "mongodb": "^6.17.0",
     "mongoose": "^8.15.1",
     "multer": "^2.0.1",
     "multer-storage-cloudinary": "^4.0.0",
