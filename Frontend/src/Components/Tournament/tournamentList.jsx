@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { Snackbar, Alert } from "@mui/material";
 import "./tournamentList.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import bgmi1 from '../../assets/bgmi1.jpg';
+import bgmi2 from '../../assets/bgmi2.jpg';
+import bgmi3 from '../../assets/bgmi3.jpg';
+import bgmi4 from '../../assets/bgmi3.jpg';
 
 const tournaments = [
   {
@@ -10,7 +14,7 @@ const tournaments = [
     description:
       "Gear up for an intense BGMI beginner showdown! 25 rising squads. Free entry.",
     status: "open",
-    image: "../src/assets/bgmi1.jpg",
+    image:bgmi1,
   },
   {
     title: "BGMI Intermediate Challenge",
@@ -18,7 +22,7 @@ const tournaments = [
     description:
       "For players ready to take the next step. Competitive matches.",
     status: "open",
-    image: "../src/assets/bgmi2.jpg",
+    image:bgmi2,
   },
   {
     title: "HocxGaming Champions Cup",
@@ -26,7 +30,7 @@ const tournaments = [
     description:
       "Battle for glory! Open for all BGMI players — register your squad now.",
     status: "coming",
-    image: "../src/assets/bgmi3.jpg",
+    image:bgmi3,
   },
   {
     title: "HocxGaming Legacy Cup",
@@ -34,7 +38,7 @@ const tournaments = [
     description:
       "Exclusive tournament for rising BGMI stars to showcase their skills.",
     status: "coming",
-    image: "../src/assets/bgmi4.jpg",
+    image:bgmi4,
   },
 ].sort((a, b) => (a.status === "open" ? -1 : 1));
 

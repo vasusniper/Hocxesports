@@ -110,8 +110,8 @@ function ContactPage() {
                 </div>
                 <div className="contact-details">
                   <h4>Email</h4>
-                  <p>contact@hocxgaming.com</p>
-                  <p>support@hocxgaming.com</p>
+                  <p>contact@hocxesports.com</p>
+                  <p>support@hocxesports.com</p>
                 </div>
               </div>
 
@@ -132,7 +132,7 @@ function ContactPage() {
                 </div>
                 <div className="contact-details">
                   <h4>Address</h4>
-                  <p>123 Gaming Street</p>
+                  <p>H456 Gaming Street</p>
                   <p>Bangalore, Karnataka, India</p>
                 </div>
               </div>

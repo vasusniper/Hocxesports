@@ -6,10 +6,11 @@ function HeroSection() {
   return (
     <section className="hero-section">
       <div className="hero-content">
-        <h1 className="hero-title">Join the Battle. Rule the Arena.</h1>
+        <h1 className="hero-title">Join the Battle. Rise with HocxEsports.</h1>
         <p className="hero-subtitle">
-          HocxGaming organizes top-tier BGMI tournaments and live streams to
-          bring out the best in gamers.
+          HocxEsports is your gateway to BGMI tournaments — built for beginners
+          and rising stars. Compete, grow, and showcase your talent in
+          live-streamed events.
         </p>
         <div className="hero-buttons">
           <Link to="/tournaments" className="Globle-button-style">
