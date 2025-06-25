@@ -6,6 +6,7 @@ const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const authRoutes = require("./routes/auth");
 const teamRoutes = require("./routes/BgmiPlayer");
+const path = require("path");
 const passportConfig = require("./config/passportConfig");
 require("dotenv").config();
 
@@ -83,6 +84,10 @@ app.use(passport.session());
 // Routes
 app.use("/auth", authRoutes);
 app.use("/teams", teamRoutes);
+// Last Route 
+app.use((req, res, next) => {
+  res.status(404).sendFile(path.join(__dirname, "Frontend/public/error.html"));
+});
 
 // Health check endpoint
 app.get("/", (req, res) => {
@@ -92,15 +97,6 @@ app.get("/", (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
-  (req, res) => {
-    res.redirect("https://hocxesports-frontend.onrender.com");
-  }
-);
-
-
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
