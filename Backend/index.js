@@ -92,6 +92,14 @@ app.get("/", (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/" }),
+  (req, res) => {
+    res.redirect("https://hocxesports-frontend.onrender.com");
+  }
+);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
