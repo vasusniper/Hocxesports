@@ -7,6 +7,7 @@ const ShowTeamProfile = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [teamcount, setTeamsCount] = useState("0");
 
   const fetchTeams = async () => {
     try {
@@ -16,7 +17,8 @@ const ShowTeamProfile = () => {
           withCredentials: true,
         }
       );
-      setTeams(response.data);
+      setTeams(response.data.teams);
+      setTeamsCount(response.data.count);
     } catch (err) {
       setError("Failed to fetch teams. Please try again later.");
       console.error("Error fetching teams:", err);
@@ -46,7 +48,7 @@ const ShowTeamProfile = () => {
     <div className="team-list-container">
       <TeamAddForm onTeamCreated={fetchTeams} />
 
-      <h2 style={{ color: "#ffc107" }}>Registered Teams</h2>
+      <h2 style={{ color: "#ffc107" }}>Registered Teams {teamcount}</h2>
       <div className="divider"></div>
 
       {teams.length === 0 ? (

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -9,78 +10,80 @@ const teamRoutes = require("./routes/BgmiPlayer");
 const path = require("path");
 const passportConfig = require("./config/passportConfig");
 require("dotenv").config();
+=======
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const { connectDB } = require('./config/db');
+const { notFound, errorHandler } = require('./middlewares/error');
+>>>>>>> ab4e9370 (add Some furure)
 
 const app = express();
 
-// Validate required environment variables
-const requiredEnvVars = ["DB_URL", "SESSION_SECRET"];
-const missingVars = requiredEnvVars.filter((v) => !process.env[v]);
+// ======================
+// 1. Environment Validation
+// ======================
+const requiredEnvVars = [
+  'DB_URL',
+  'SESSION_SECRET',
+  'GOOGLE_CLIENT_ID',
+  'GOOGLE_CLIENT_SECRET',
+  'CLIENT_URL'
+];
 
+const missingVars = requiredEnvVars.filter(v => !process.env[v]);
 if (missingVars.length > 0) {
-  console.error(
-    `Missing required environment variables: ${missingVars.join(", ")}`
-  );
+  console.error('❌ Missing environment variables:', missingVars.join(', '));
   process.exit(1);
 }
 
-// Enhanced MongoDB connection with modern options
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.DB_URL, {
-      serverSelectionTimeoutMS: 5000,
-      retryWrites: true,
-      w: 'majority',
-      tls: true, // Use 'tls' instead of 'ssl'
-      tlsAllowInvalidCertificates: false // More secure than allowing invalid certs
-    });
-    console.log("MongoDB Connected");
-  } catch (err) {
-    console.error("MongoDB Connection Error:", err);
-    process.exit(1); // Exit if DB connection fails
-  }
-};
-
-// Initialize Passport configuration
-passportConfig(passport);
-
-// Middlewares
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
-    credentials: true,
-  })
-);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Enhanced session configuration
-const sessionStore = MongoStore.create({
-  mongoUrl: process.env.DB_URL,
-  collectionName: "sessions",
-  ttl: 30 * 24 * 60 * 60, // 30 days in seconds
-  autoRemove: "native", // Use MongoDB's TTL index
-  touchAfter: 24 * 3600, // Reduce session writes
+// ======================
+// 2. Database Connection
+// ======================
+connectDB().then(() => {
+  console.log('MongoDB Connected');
+}).catch(err => {
+  console.error('MongoDB Connection Failed:', err.message);
+  process.exit(1);
 });
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore,
-    cookie: {
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      secure: process.env.NODE_ENV === "production",
-      httpOnly: true,
-    },
-  })
-);
+// ======================
+// 3. Middleware Setup
+// ======================
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}));
 
-// Initialize Passport and session
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.DB_URL,
+    collectionName: 'sessions',
+    ttl: 24 * 60 * 60 // 1 day
+  }),
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true
+  }
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
+require('./config/passport')(passport);
 
+<<<<<<< HEAD
 // Routes
 app.use("/auth", authRoutes);
 app.use("/teams", teamRoutes);
@@ -102,19 +105,57 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Internal Server Error" });
 });
-
-// Start server only after DB connection
-const PORT = process.env.PORT || 5000;
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
-    console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
+=======
+// ======================
+// 4. Route Configuration
+// ======================
+app.get('/', (req, res) => {
+  res.json({
+    status: 'running',
+    version: '1.0.0',
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
-// Handle process termination
-process.on("SIGINT", async () => {
-  await mongoose.connection.close();
-  console.log("MongoDB connection closed due to app termination");
-  process.exit(0);
+app.use('/auth', require('./routes/auth'));
+app.use('/teams', require('./routes/teams'));
+>>>>>>> ab4e9370 (add Some furure)
+
+// ======================
+// 5. Error Handling
+// ======================
+app.use(notFound);       // ✅ custom 404 handler (redirects to frontend)
+app.use(errorHandler);   // ✅ general error handler
+
+// ======================
+// 6. Server Startup
+// ======================
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, () => {
+  console.log(`
+  🚀 Server running in ${process.env.NODE_ENV || 'development'} mode
+  📡 Listening on port ${PORT}
+  🔗 CORS enabled for: ${process.env.CLIENT_URL}
+  `);
+});
+
+// ======================
+// 7. Graceful Shutdown
+// ======================
+process.on('SIGTERM', () => {
+  console.log('🛑 SIGTERM received. Shutting down gracefully...');
+  server.close(() => {
+    console.log('💤 Server terminated');
+    process.exit(0);
+  });
+});
+
+process.on('unhandledRejection', (err) => {
+  console.error('⚠️ Unhandled Rejection:', err);
+  server.close(() => process.exit(1));
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('⚠️ Uncaught Exception:', err);
+  server.close(() => process.exit(1));
 });

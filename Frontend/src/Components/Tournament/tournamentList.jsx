@@ -5,41 +5,50 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import bgmi1 from '../../assets/bgmi1.jpg';
 import bgmi2 from '../../assets/bgmi2.jpg';
 import bgmi3 from '../../assets/bgmi3.jpg';
-import bgmi4 from '../../assets/bgmi3.jpg';
+import bgmi4 from '../../assets/bgmi4.jpg';
+import bgmi5 from '../../assets/bgmi5.jpg';
 
 const tournaments = [
   {
-    title: "BGMI Beginner Series – June 2025",
-    date: "June, 2025",
+    title: "Hocx Esports Rookie Rumble",
+    date: "July 20, 2025",
     description:
-      "Gear up for an intense BGMI beginner showdown! 25 rising squads. Free entry.",
+      "A competitive entry-level BGMI tournament for emerging squads. Free registration. Limited slots!",
     status: "open",
-    image:bgmi1,
+    image: bgmi1,
   },
   {
-    title: "BGMI Intermediate Challenge",
-    date: "July, 2025",
+    title: "Hocx Esports Challenger Clash",
+    date: "August 10, 2025",
     description:
-      "For players ready to take the next step. Competitive matches.",
+      "For mid-tier BGMI teams ready to prove their firepower. Competitive, skill-based matchmaking.",
     status: "open",
-    image:bgmi2,
+    image: bgmi2,
   },
   {
-    title: "HocxGaming Champions Cup",
-    date: "August 5, 2025",
+    title: "Hocx Esports Pro League Qualifiers",
+    date: "September 14, 2025",
     description:
-      "Battle for glory! Open for all BGMI players — register your squad now.",
+      "Top squads battle for a spot in the upcoming Pro League. Open registration. High stakes.",
     status: "coming",
-    image:bgmi3,
+    image: bgmi3,
   },
   {
-    title: "HocxGaming Legacy Cup",
-    date: "November 2025",
+    title: "Hocx Esports Invitational Arena",
+    date: "October 18, 2025",
     description:
-      "Exclusive tournament for rising BGMI stars to showcase their skills.",
+      "Invite-only tournament featuring top performers from previous events. High reward.",
     status: "coming",
-    image:bgmi4,
+    image: bgmi4,
   },
+  {
+    title: "Hocx Esports Grand Finals 2025",
+    date: "November 23, 2025",
+    description:
+      "The biggest showdown of the year. Champions from across tournaments clash for the legacy.",
+    status: "coming",
+    image: bgmi5,
+  }
 ].sort((a, b) => (a.status === "open" ? -1 : 1));
 
 function TournamentList() {

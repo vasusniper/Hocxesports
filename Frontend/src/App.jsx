@@ -9,10 +9,7 @@ import TournamentPage from "./Components/Tournament/tournamentPage";
 import Footer from "./Components/Footer";
 import NotFound from "./Components/error/errorPage";
 import ScrollToTop from "./ScrollToTop";
-
-
 function App() {
-
   return (
     <>
       <Router>
@@ -25,6 +22,7 @@ function App() {
               <Route path="/tournaments" element={<TournamentPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+                <Route path="/404" element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
@@ -34,5 +32,4 @@ function App() {
     </>
   );
 }
-
 export default App;

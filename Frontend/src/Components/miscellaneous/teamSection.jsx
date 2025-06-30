@@ -13,26 +13,28 @@ const TeamSection = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const sliderRef = useRef(null);
-  const teamMembers = [
-    {
-      img: Sachin,
-      name: "Alex Tr",
-      position: "CEO & Founder",
-      about: "Alex is the visionary behind HocxGaming, leading the team with strategic direction and dedication."
-    },
-    {
-      img: Vasusniper,
-      name: "Vasu Sniper",
-      position: "Co-Founder",
-      about: "Vasu Sniper is the Co-founder of HocxGaming. He leads the entire team with strong leadership."
-    },
-    {
-      img: Yas,
-      name: "Yas Sniper",
-      position: "Tourn. Manager",
-      about: "Yas Sniper oversees all tournaments at HocxGaming, ensuring every match runs smoothly."
-    }
-  ];
+const teamMembers = [
+  {
+    img: Sachin,
+    name: "Alex Tr",
+    position: "Battle Commander",
+    about: "Alex Tr plays a key role in shaping HocxEsports. As a core leader, he focuses on vision, growth strategies, and building a strong gaming ecosystem."
+  },
+  {
+    img: Vasusniper,
+    name: "Vasu Sniper",
+    position: "Battle Commander",
+    about: "Vasu Sniper is the Co-founder of HocxEsports. He handles team operations, content direction, and ensures the smooth execution of online tournaments."
+  },
+  {
+    img: Yas,
+    name: "Yas Sniper",
+    position: "Battle Commander",
+    about: "Yas Sniper is the tournament expert at HocxEsports. He manages event logistics, match scheduling, and guarantees a competitive and fair experience for all teams."
+  }
+];
+
+
 
   // Check if mobile view
   useEffect(() => {

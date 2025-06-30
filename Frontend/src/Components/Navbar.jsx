@@ -45,6 +45,7 @@ function Navbar() {
       const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/auth/user`, {
         withCredentials: true,
       });
+      console.log("User data fetched:",user);
       setUser(res.data);
     } catch {
       setUser(null);

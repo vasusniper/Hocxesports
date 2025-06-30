@@ -1,12 +1,57 @@
-# React + Vite
+# HocxEsports 🎮
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**HocxEsports** is a full-stack MERN (MongoDB, Express.js, React, Node.js) application designed to manage, organize, and stream online esports tournaments like BGIS and BMPS.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧩 Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend:** React.js, HTML, CSS, JavaScript, Bootstrap  
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB (Mongoose ODM)  
+- **Deployment:** Render
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ⚙️ Features
+
+- ✅ Player registration and team management  
+- ✅ Custom tournament creation (BGIS/BMPS format)  
+- ✅ Live match display and bracket updates  
+- ✅ Admin dashboard for tournament control  
+- ✅ Stream integration support (YouTube, etc.)
+
+---
+
+## 📁 Folder Structure
+```
+HocxEsports/
+├── frontend/    # React-based client side
+├── backend/     # Express API and MongoDB connection
+└── README.md
+
+```
+---
+## Getting Started
+
+### 🔧 Frontend  Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+### Backend Setup
+
+```bash
+cd backend
+npm install
+node index.js
+   ```
+### 📞 Contact
+Made with ❤️ by Vasu Sniper
+GitHub: @vasusniper
+YouTube: @Hocxesports
+---
+
+

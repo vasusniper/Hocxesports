@@ -11,16 +11,16 @@ function Footer() {
           <div className="col-12 col-md-6 text-center">
             <div className="icons_div">
               <a href="#" target="_blank" >
-              <i class="fa-brands fa-facebook"></i>
+              <i className="fa-brands fa-facebook"></i>
               </a>
               <a href="#" target="_blank" >
-              <i class="fa-brands fa-instagram"></i>
+              <i className="fa-brands fa-instagram"></i>
               </a>
               <a href="#" target="_blank" >
-              <i class="fa-brands fa-x-twitter"></i>
+              <i className="fa-brands fa-x-twitter"></i>
               </a>
               <a href="https://www.youtube.com/hocxgaming" target="_blank">
-              <i class="fa-brands fa-youtube"></i>
+              <i className="fa-brands fa-youtube"></i>
               </a>
             </div>
           </div>

@@ -1,34 +1,23 @@
-const express = require("express");
-const passport = require("passport");
+const express = require('express');
+const passport = require('passport');
 const router = express.Router();
+const authController = require('../controllers/authController');
 
-// Google login
-router.get("/google", passport.authenticate("google", { scope: ["profile","email"] }));
+// Google OAuth routes
+router.get('/google', passport.authenticate('google', { 
+  scope: ['profile', 'email'],
+  prompt: 'select_account' 
+}));
 
-// Callback
-router.get("/google/callback",
-  passport.authenticate("google", {
-    failureRedirect:`${process.env.CLIENT_URL}/login`,
+router.get('/google/callback', 
+  passport.authenticate('google', { 
+    failureRedirect: `${process.env.CLIENT_URL}/login?error=auth_failed` 
   }),
-  (req, res) => {
-    res.redirect(`${process.env.CLIENT_URL}`);  // redirect to React home
-  }
+  authController.googleAuthSuccess
 );
 
-// Get user data
-router.get("/user", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json({ user: req.user });
-  } else {
-    res.status(401).json({ user: null });
-  }
-});
-
-// Logout
-router.get("/logout", (req, res) => {
-  req.logout(() => {
-    res.redirect("/");
-  });
-});
+// User routes
+router.get('/user', authController.getCurrentUser);
+router.get('/logout', authController.logout);
 
 module.exports = router;
